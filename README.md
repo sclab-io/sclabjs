@@ -105,6 +105,15 @@ Type: `function`
 
 callback function when login complete
 
+### logout(callback)
+
+#### callback
+
+Type: `function`
+
+callback function when logout complete
+
+
 ### kill()
 
 clear Sclab
