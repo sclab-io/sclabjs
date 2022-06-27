@@ -12,7 +12,7 @@
 
 > SCLAB Javascript NPM Module for integrate with a SITE created by [SCLAB Studio](https://www.sclab.io)
 
-> [documentation](https://docs.sclab.io/en/)
+> [API Documentation](https://docs.sclab.io/en/)
 
 
 ## Install
