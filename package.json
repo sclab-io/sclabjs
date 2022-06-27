@@ -1,6 +1,6 @@
 {
   "name": "sclabjs",
-  "version": "0.0.1-development",
+  "version": "0.0.1",
   "description": "SCLAB Javascript NPM Module",
   "main": "./lib/src/index.js",
   "files": [
