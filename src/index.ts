@@ -10,16 +10,22 @@ type Callback = (result: boolean) => void;
 type PostMessageData = { type: string; result: boolean };
 
 export class Sclab {
-  static EVENT_TYPE: { LOGIN_COMPLETE: string; INIT_COMPLETE: string } = {
+  static EVENT_TYPE: {
+    LOGIN_COMPLETE: string;
+    INIT_COMPLETE: string;
+    LOGOUT_COMPLETE: string;
+  } = {
     LOGIN_COMPLETE: 'SCLAB_API.EVENT_TYPE.LOGIN_COMPLETE',
     INIT_COMPLETE: 'SCLAB_API.EVENT_TYPE.INIT_COMPLETE',
+    LOGOUT_COMPLETE: 'SCLAB_API.EVENT_TYPE.LOGOUT_COMPLETE',
   };
 
   static siteURL?: string;
   static apiToken?: string;
   static iframe?: HTMLIFrameElement;
-  static loginCallback?: Callback;
   static initCallback?: Callback;
+  static loginCallback?: Callback;
+  static logoutCallback?: Callback;
 
   static init(
     siteURL: string,
@@ -52,6 +58,13 @@ export class Sclab {
             try {
               const data: PostMessageData = event.data;
               switch (data.type) {
+                case Sclab.EVENT_TYPE.INIT_COMPLETE: {
+                  if (Sclab.initCallback) {
+                    Sclab.initCallback(data.result);
+                  }
+                  break;
+                }
+
                 case Sclab.EVENT_TYPE.LOGIN_COMPLETE: {
                   if (Sclab.loginCallback) {
                     Sclab.loginCallback(data.result);
@@ -59,9 +72,9 @@ export class Sclab {
                   break;
                 }
 
-                case Sclab.EVENT_TYPE.INIT_COMPLETE: {
-                  if (Sclab.initCallback) {
-                    Sclab.initCallback(data.result);
+                case Sclab.EVENT_TYPE.LOGOUT_COMPLETE: {
+                  if (Sclab.logoutCallback) {
+                    Sclab.logoutCallback(data.result);
                   }
                   break;
                 }
@@ -87,6 +100,10 @@ export class Sclab {
         throw new Error('apiToken is required');
       }
       Sclab.apiToken = apiToken;
+
+      if (Sclab.initCallback) {
+        Sclab.initCallback(true);
+      }
     }
 
     return true;
@@ -122,6 +139,25 @@ export class Sclab {
       if (Sclab.iframe && Sclab.iframe.contentWindow) {
         Sclab.iframe.contentWindow.postMessage(
           { type: 'LOGIN_WITH_TOKEN', token },
+          Sclab.siteURL
+        );
+      }
+    } else {
+      throw new Error('This function only available on client side.');
+    }
+  }
+
+  static logout(callback?: Callback): void {
+    if (!Sclab.siteURL) {
+      throw new Error('not initialized');
+    }
+
+    if (isBrowser()) {
+      Sclab.logoutCallback = callback;
+
+      if (Sclab.iframe && Sclab.iframe.contentWindow) {
+        Sclab.iframe.contentWindow.postMessage(
+          { type: 'LOGOUT' },
           Sclab.siteURL
         );
       }

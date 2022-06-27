@@ -78,4 +78,25 @@ describe('index', () => {
       }
     });
   });
+
+  describe('loginWithToken', () => {
+    it('not initialized', () => {
+      try {
+        Sclab.logout();
+      } catch (e) {
+        expect((e as ErrorWithMessage).message).toMatch('not initialized');
+      }
+    });
+
+    it('client check', () => {
+      try {
+        Sclab.siteURL = 'http://sclab.io';
+        Sclab.logout();
+      } catch (e) {
+        expect((e as ErrorWithMessage).message).toMatch(
+          'This function only available on client side.'
+        );
+      }
+    });
+  });
 });

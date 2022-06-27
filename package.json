@@ -1,6 +1,6 @@
 {
   "name": "sclabjs",
-  "version": "0.1.2-development",
+  "version": "0.1.2",
   "description": "SCLAB Javascript NPM Module",
   "main": "./lib/src/index.js",
   "files": [
@@ -121,5 +121,6 @@
       "@semantic-release/npm",
       "@semantic-release/github"
     ]
-  }
+  },
+  "dependencies": {}
 }
