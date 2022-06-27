@@ -65,11 +65,6 @@ export class Sclab {
                   }
                   break;
                 }
-
-                default: {
-                  console.error('undefined type');
-                  break;
-                }
               }
             } catch (e) {
               console.error(e);
@@ -78,6 +73,9 @@ export class Sclab {
 
           Sclab.iframe = document.createElement('iframe');
           Sclab.iframe.setAttribute('id', 'sclabjsiframe');
+          Sclab.iframe.setAttribute('width', '0');
+          Sclab.iframe.setAttribute('height', '0');
+          Sclab.iframe.setAttribute('frameborder', '0');
           document.body.appendChild(Sclab.iframe);
           Sclab.iframe.setAttribute('src', Sclab.siteURL + '/jslanding');
         } else {
