@@ -10,16 +10,22 @@ type Callback = (result: boolean) => void;
 type PostMessageData = { type: string; result: boolean };
 
 export class Sclab {
-  static EVENT_TYPE: { LOGIN_COMPLETE: string } = {
+  static EVENT_TYPE: { LOGIN_COMPLETE: string; INIT_COMPLETE: string } = {
     LOGIN_COMPLETE: 'SCLAB_API.EVENT_TYPE.LOGIN_COMPLETE',
+    INIT_COMPLETE: 'SCLAB_API.EVENT_TYPE.INIT_COMPLETE',
   };
 
   static siteURL?: string;
   static apiToken?: string;
   static iframe?: HTMLIFrameElement;
   static loginCallback?: Callback;
+  static initCallback?: Callback;
 
-  static init(siteURL: string, apiToken?: string): boolean {
+  static init(
+    siteURL: string,
+    apiToken?: string,
+    callback?: Callback
+  ): boolean {
     if (!siteURL) {
       throw new Error('siteURL is required');
     }
@@ -29,6 +35,7 @@ export class Sclab {
     }
 
     Sclab.siteURL = siteURL;
+    Sclab.initCallback = callback;
 
     if (isBrowser()) {
       // create iframe dom
@@ -37,28 +44,30 @@ export class Sclab {
           'sclabjsiframe'
         ) as HTMLIFrameElement;
         if (check === null) {
-          Sclab.iframe = document.createElement('iframe');
-          Sclab.iframe.setAttribute('id', 'sclabjsiframe');
-          document.body.appendChild(Sclab.iframe);
-          Sclab.iframe.setAttribute('src', Sclab.siteURL + '/jslanding');
-
           window.addEventListener('message', event => {
             if (!event.data) {
               return;
             }
 
             try {
-              const data: PostMessageData = JSON.parse(event.data);
+              const data: PostMessageData = event.data;
               switch (data.type) {
-                default: {
-                  console.error('undefined type');
-                  break;
-                }
-
                 case Sclab.EVENT_TYPE.LOGIN_COMPLETE: {
                   if (Sclab.loginCallback) {
                     Sclab.loginCallback(data.result);
                   }
+                  break;
+                }
+
+                case Sclab.EVENT_TYPE.INIT_COMPLETE: {
+                  if (Sclab.initCallback) {
+                    Sclab.initCallback(data.result);
+                  }
+                  break;
+                }
+
+                default: {
+                  console.error('undefined type');
                   break;
                 }
               }
@@ -66,6 +75,11 @@ export class Sclab {
               console.error(e);
             }
           });
+
+          Sclab.iframe = document.createElement('iframe');
+          Sclab.iframe.setAttribute('id', 'sclabjsiframe');
+          document.body.appendChild(Sclab.iframe);
+          Sclab.iframe.setAttribute('src', Sclab.siteURL + '/jslanding');
         } else {
           Sclab.iframe = check;
         }
@@ -90,7 +104,7 @@ export class Sclab {
 
       if (Sclab.iframe && Sclab.iframe.contentWindow) {
         Sclab.iframe.contentWindow.postMessage(
-          `login,${email},${password}`,
+          { type: 'LOGIN_WITH_PASSWORD', email, password },
           Sclab.siteURL
         );
       }
@@ -109,7 +123,7 @@ export class Sclab {
 
       if (Sclab.iframe && Sclab.iframe.contentWindow) {
         Sclab.iframe.contentWindow.postMessage(
-          `loginWithToken,${token}`,
+          { type: 'LOGIN_WITH_TOKEN', token },
           Sclab.siteURL
         );
       }
