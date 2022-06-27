@@ -25,7 +25,7 @@
   "license": "MIT",
   "author": {
     "name": "SCLAB",
-    "email": "sclab-io@users.noreply.github.com",
+    "email": "jsy@sclab.io",
     "url": "https://github.com/sclab-io"
   },
   "engines": {
@@ -70,7 +70,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/@sclab-io/cz-conventional-changelog"
+      "path": "./node_modules/@sclabjs/cz-conventional-changelog"
     }
   },
   "lint-staged": {
