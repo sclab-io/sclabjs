@@ -27,15 +27,28 @@ npm install sclabjs
 import { Sclab } from 'sclabjs';
 
 // client side
-sclab.init("https://userSiteCode.sclab.io");
+Sclab.init("https://userSiteCode.sclab.io", null, ()=>{
+  // ready
+
+  // login
+  Sclab.login('abc@sclab.io', '1234', (result: boolean)=>{
+    if(result){
+      // move to user page
+    }else{
+      // login error
+    }
+  });
+});
 
 // server side (nodejs)
-sclab.init("https://userSiteCode.sclab.io", "APITokenHere");
+Sclab.init("https://userSiteCode.sclab.io", "APITokenHere", ()=>{
+  // ready
+});
 ```
 
 ## Client API
 
-### init(siteURL, apiToken?)
+### init(siteURL, apiToken?, callback?)
 
 #### siteURL
 
@@ -51,6 +64,12 @@ Optional: `true`
 
 API Token for SCLAB REST API.
 https://docs.sclab.io/en/
+
+#### callback
+
+Type: `function`
+
+callback function when sclabjs ready to use
 
 ### login(email, password, callback)
 
