@@ -27,7 +27,7 @@ npm install sclabjs
 import { Sclab } from 'sclabjs';
 
 // client side
-Sclab.init("https://userSiteCode.sclab.io", null, ()=>{
+Sclab.init("https://userSiteCode.sclab.io", ()=>{
   // ready
 
   // login
