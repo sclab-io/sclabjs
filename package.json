@@ -17,7 +17,7 @@
     "test:watch": "jest --watch",
     "test": "jest --coverage",
     "typecheck": "tsc --noEmit",
-    "publish": "tsc && npm publish"
+    "publish": "tsc && publish"
   },
   "repository": {
     "type": "git",
