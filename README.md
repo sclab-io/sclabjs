@@ -10,7 +10,7 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> SCLAB Javascript NPM Module for integrate with a SITE created by [SCLAB Studio](https://www.sclab.io)
+> SCLAB client side javascript NPM Module for integrate with a SITE created by [SCLAB Studio](https://www.sclab.io)
 
 > [API Documentation](https://docs.sclab.io/en/)
 
@@ -39,11 +39,6 @@ Sclab.init("https://userSiteCode.sclab.io", null, ()=>{
     }
   });
 });
-
-// server side (nodejs)
-Sclab.init("https://userSiteCode.sclab.io", "APITokenHere", ()=>{
-  // ready
-});
 ```
 
 ## Client APIs
@@ -55,19 +50,6 @@ Sclab.init("https://userSiteCode.sclab.io", "APITokenHere", ()=>{
 Type: `string`
 
 Published site url of your SITE.
-
-#### apiToken
-
-Type: `string`
-
-Optional: `true`
-
-API Token for SCLAB REST API.
-https://docs.sclab.io/
-
-Do not pass the apiToken on client side.
-API token is only for server side.
-DO NOT share this token with others.
 
 #### callback
 

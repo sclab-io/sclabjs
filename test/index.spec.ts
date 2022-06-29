@@ -19,20 +19,14 @@ describe('index', () => {
       }
     });
 
-    it('client', () => {
+    it('check server running', () => {
       try {
         Sclab.init('http://sclab.io/');
       } catch (e) {
         expect(Sclab.siteURL).toMatch('http://sclab.io');
-        expect((e as ErrorWithMessage).message).toMatch('apiToken is required');
-      }
-    });
-
-    it('server', () => {
-      try {
-        expect(Sclab.init('http://sclab.io', 'asd')).toEqual(true);
-      } catch (e) {
-        fail(e);
+        expect((e as ErrorWithMessage).message).toMatch(
+          'This library only available on client side.'
+        );
       }
     });
   });
@@ -52,7 +46,7 @@ describe('index', () => {
         Sclab.login('abc@sclab.io', '1234');
       } catch (e) {
         expect((e as ErrorWithMessage).message).toMatch(
-          'This function only available on client side.'
+          'This library only available on client side.'
         );
       }
     });
@@ -73,7 +67,7 @@ describe('index', () => {
         Sclab.loginWithToken('loginToken');
       } catch (e) {
         expect((e as ErrorWithMessage).message).toMatch(
-          'This function only available on client side.'
+          'This library only available on client side.'
         );
       }
     });
@@ -94,7 +88,7 @@ describe('index', () => {
         Sclab.logout();
       } catch (e) {
         expect((e as ErrorWithMessage).message).toMatch(
-          'This function only available on client side.'
+          'This library only available on client side.'
         );
       }
     });

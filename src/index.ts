@@ -21,17 +21,12 @@ export class Sclab {
   };
 
   static siteURL?: string;
-  static apiToken?: string;
   static iframe?: HTMLIFrameElement;
   static initCallback?: Callback;
   static loginCallback?: Callback;
   static logoutCallback?: Callback;
 
-  static init(
-    siteURL: string,
-    apiToken?: string,
-    callback?: Callback
-  ): boolean {
+  static init(siteURL: string, callback?: Callback): boolean {
     if (!siteURL) {
       throw new Error('siteURL is required');
     }
@@ -96,14 +91,7 @@ export class Sclab {
         }
       }
     } else {
-      if (!apiToken) {
-        throw new Error('apiToken is required');
-      }
-      Sclab.apiToken = apiToken;
-
-      if (Sclab.initCallback) {
-        Sclab.initCallback(true);
-      }
+      throw new Error('This library only available on client side.');
     }
 
     return true;
@@ -124,7 +112,7 @@ export class Sclab {
         );
       }
     } else {
-      throw new Error('This function only available on client side.');
+      throw new Error('This library only available on client side.');
     }
   }
 
@@ -143,7 +131,7 @@ export class Sclab {
         );
       }
     } else {
-      throw new Error('This function only available on client side.');
+      throw new Error('This library only available on client side.');
     }
   }
 
@@ -162,7 +150,7 @@ export class Sclab {
         );
       }
     } else {
-      throw new Error('This function only available on client side.');
+      throw new Error('This library only available on client side.');
     }
   }
 
@@ -173,7 +161,6 @@ export class Sclab {
 
     Sclab.iframe = undefined;
     Sclab.siteURL = undefined;
-    Sclab.apiToken = undefined;
     Sclab.loginCallback = undefined;
   }
 }
