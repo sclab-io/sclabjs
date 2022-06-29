@@ -12,7 +12,7 @@
 
 > SCLAB client side javascript NPM Module for integrate with a SITE created by [SCLAB Studio](https://www.sclab.io)
 
-> [API Documentation](https://docs.sclab.io/en/)
+> [Documentation](https://docs.sclab.io)
 
 
 ## Install
