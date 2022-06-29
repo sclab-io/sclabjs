@@ -46,7 +46,7 @@ Sclab.init("https://userSiteCode.sclab.io", "APITokenHere", ()=>{
 });
 ```
 
-## Client API
+## Client APIs
 
 ### init(siteURL, apiToken?, callback?)
 
@@ -63,7 +63,11 @@ Type: `string`
 Optional: `true`
 
 API Token for SCLAB REST API.
-https://docs.sclab.io/en/
+https://docs.sclab.io/
+
+Do not pass the apiToken on client side.
+API token is only for server side.
+DO NOT share this token with others.
 
 #### callback
 
